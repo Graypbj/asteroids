@@ -1,3 +1,4 @@
+import sys
 import pygame
 from constants import *
 from player import Player
@@ -34,10 +35,18 @@ def main():
         # Draw black screen
         screen.fill("black")
 
-        # Iterate over groups and update their position and draw them
+        # Update objects positions
         for object in updatable:
             object.update(dt)
         
+        # Check if the asteroid has collided with the player
+        for asteroid in asteroids:
+            game_over = asteroid.collided(player)
+            if game_over:
+                print("Game over!")
+                sys.exit()
+        
+        # Draw all objects on screen
         for object in drawable:
             object.draw(screen)
         
